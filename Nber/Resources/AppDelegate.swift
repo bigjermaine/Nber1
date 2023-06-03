@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import Firebase
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        
+        let window =  UIWindow(frame: UIScreen.main.bounds)
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+        
+        if  isLoggedIn {
+            let navC = UINavigationController(rootViewController:  HomeViewController())
+            window.rootViewController =   navC
+        }else {
+            let navC = UINavigationController(rootViewController: WelcomeViewController())
+            window.rootViewController =  navC
+        }
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 
